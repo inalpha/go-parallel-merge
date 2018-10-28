@@ -1,21 +1,22 @@
-package pms
+package mergesort
 
-func mergesort(s []int) {
+func Sequential(s []int) {
 	if len(s) > 1 {
 		m := len(s) / 2
-		mergesort(s[:m])
-		mergesort(s[m:])
+		Sequential(s[:m])
+		Sequential(s[m:])
 		merge(s, m)
 	}
 }
 
+func Parallel(s []int) {
+
+}
+
 func merge(s []int, m int) {
+	cl, cr, i, h := 0, m, 0, len(s)-1
 	c := make([]int, len(s))
 	copy(c, s)
-	cl := 0
-	cr := m
-	i := 0
-	h := len(s) - 1
 
 	for cl <= m-1 && cr <= h {
 		if c[cl] <= c[cr] {
