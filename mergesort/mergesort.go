@@ -1,5 +1,9 @@
 package mergesort
 
+import "sync"
+
+const max = 1 << 11
+
 func Sequential(s []int) {
 	if len(s) > 1 {
 		m := len(s) / 2
@@ -10,7 +14,24 @@ func Sequential(s []int) {
 }
 
 func Parallel(s []int) {
+	len := len(s)
+	if len > 1 {
+		if len <= max {
+			Sequential(s)
+		} else {
+			m := len / 2
+			var wg sync.WaitGroup
+			wg.Add(1)
 
+			go func() {
+				defer wg.Done()
+				Parallel(s[:m])
+			}()
+			Parallel(s[:m])
+			wg.Wait()
+			merge(s, m)
+		}
+	}
 }
 
 func merge(s []int, m int) {
