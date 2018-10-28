@@ -20,14 +20,10 @@ func TestSequential(t *testing.T) {
 }
 func TestParallel(t *testing.T) {
 	s := random(size)
-	// t.Logf("Source: %v", s)
-
 	expected := make([]int, size)
 	copy(expected, s)
 	Sequential(expected)
-	// t.Logf("Expected: %v", expected)
 	Parallel(s)
-	// t.Logf("Result: %v", s)
 	if !reflect.DeepEqual(s, expected) {
 		t.Error("did not match expected sorting")
 	}

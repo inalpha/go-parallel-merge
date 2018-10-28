@@ -27,7 +27,7 @@ func Parallel(s []int) {
 				defer wg.Done()
 				Parallel(s[:m])
 			}()
-			Parallel(s[:m])
+			Parallel(s[m:])
 			wg.Wait()
 			merge(s, m)
 		}
